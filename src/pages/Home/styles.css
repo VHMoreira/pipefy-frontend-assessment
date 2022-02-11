@@ -1,13 +1,13 @@
-.App {
+.Home {
   text-align: center;
 }
 
-.App-logo {
+.Home-logo {
   height: 40px;
   pointer-events: none;
 }
 
-.App-header {
+.Home-header {
   min-height: 40vh;
   display: flex;
   flex-direction: column;

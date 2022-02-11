@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import './index.css';
-import App from './App';
+import { ApolloProvider } from '@apollo/client';
+import 'themes/global.css';
+import App from 'pages/Home';
 import reportWebVitals from './reportWebVitals';
-
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_PIPEFY_API_URL || '',
-  cache: new InMemoryCache(),
-  headers: {
-    authorization: `Bearer ${process.env.REACT_APP_PIPEFY_API_TOKEN || ''}`,
-  },
-  credentials: 'same-origin',
-});
+import ApolloClient from 'configs/clients/Apollo';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={ApolloClient}>
       <App />
     </ApolloProvider>
   </React.StrictMode>,
