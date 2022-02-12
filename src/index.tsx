@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
-import 'themes/global.css';
 import App from 'pages/Home';
 import reportWebVitals from './reportWebVitals';
 import ApolloClient from 'configs/clients/Apollo';
+import GlobalStyle from 'themes/globalStyle';
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={ApolloClient}>
+      <GlobalStyle />
       <App />
     </ApolloProvider>
   </React.StrictMode>,

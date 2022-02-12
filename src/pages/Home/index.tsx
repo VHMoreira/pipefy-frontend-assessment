@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
-import './styles.css';
+import { Container, Header, Logo } from './styles';
 
 const GET_ORGANIZATION = gql`
 query GetOrganizations{
@@ -22,18 +22,18 @@ const Home: React.FC = () => {
   const { data } = useQuery<{ organization: Organization }>(GET_ORGANIZATION)
 
   return (
-    <main className="Home">
-      <header className="Home-header">
-        <img
+    <Container>
+      <Header>
+        <Logo
           src="https://files.readme.io/9e810f9-small-developers3x.png"
           className="Home-logo"
           alt="logo"
         />
-      </header>
+      </Header>
       <section>
         {data?.organization.pipes.map(pipe => <div key={pipe.id}>{pipe.name}</div>)}
       </section>
-    </main>
+    </Container>
   );
 }
 

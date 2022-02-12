@@ -25,7 +25,8 @@
     ]
   },
   "include": [
-    "src"
+    "src",
+    "public/fonts"
   ],
   "exclude": [
     "node_modules"
