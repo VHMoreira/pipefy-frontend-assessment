@@ -5,12 +5,16 @@ import App from 'pages/Home';
 import reportWebVitals from './reportWebVitals';
 import ApolloClient from 'configs/clients/Apollo';
 import GlobalStyle from 'themes/globalStyle';
+import { ThemeProvider } from 'styled-components';
+import DefaultTheme from 'themes/default';
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={ApolloClient}>
-      <GlobalStyle />
-      <App />
+      <ThemeProvider theme={DefaultTheme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

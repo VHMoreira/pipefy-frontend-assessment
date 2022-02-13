@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
 import {
+  CardContainer,
   Container,
   Content,
   Subtitle,
@@ -33,7 +34,12 @@ const PipesList: React.FC = () => {
         Here are all your process
       </Subtitle>
       <Content>
-        {data?.organization.pipes.map(pipe => <div key={pipe.id}>{pipe.name}</div>)}
+        {data?.organization.pipes.map(pipe => (
+          <CardContainer key={pipe.id} backgroundColor={pipe.color}>
+            <p>{pipe.name}</p>
+            <p>{pipe.cards_count}</p>
+          </CardContainer>
+        ))}
       </Content>
     </Container>
   );
