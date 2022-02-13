@@ -1,25 +1,12 @@
-import { gql, useQuery } from '@apollo/client';
 import React from 'react';
-import { Container, Header, Logo } from './styles';
-
-const GET_ORGANIZATION = gql`
-query GetOrganizations{
-  organization(id: 300562393) {
-    id
-    name
-    pipes {
-      id
-      name
-      color
-      cards_count
-      icon
-    }
-  }
-}
-`
+import PipesList from 'containers/Pipes/List';
+import {
+  Container,
+  Header,
+  Logo
+} from './styles';
 
 const Home: React.FC = () => {
-  const { data } = useQuery<{ organization: Organization }>(GET_ORGANIZATION)
 
   return (
     <Container>
@@ -31,7 +18,7 @@ const Home: React.FC = () => {
         />
       </Header>
       <section>
-        {data?.organization.pipes.map(pipe => <div key={pipe.id}>{pipe.name}</div>)}
+        <PipesList />
       </section>
     </Container>
   );
