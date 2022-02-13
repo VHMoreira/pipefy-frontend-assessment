@@ -2,6 +2,7 @@ import React from 'react';
 import PipesList from 'containers/Pipes/List';
 import {
   Container,
+  Content,
   Header,
   Logo
 } from './styles';
@@ -17,9 +18,9 @@ const Home: React.FC = () => {
           alt="logo"
         />
       </Header>
-      <section>
+      <Content>
         <PipesList />
-      </section>
+      </Content>
     </Container>
   );
 }

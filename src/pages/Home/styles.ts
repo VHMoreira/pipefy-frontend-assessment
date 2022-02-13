@@ -17,3 +17,12 @@ export const Header = styled.header`
     justify-content: center;
     font-size: calc(10px + 2vmin);
 `
+
+export const Content = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+`;
