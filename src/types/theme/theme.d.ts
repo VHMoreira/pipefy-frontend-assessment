@@ -10,6 +10,7 @@ declare interface Colors {
     orange: Shades
     pink: Shades
     purple: Shades
+    gray: Shades
 }
 
 declare type ColorKeys = keyof Colors

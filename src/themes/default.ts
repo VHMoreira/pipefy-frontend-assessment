@@ -22,7 +22,11 @@ const DefaultTheme: Theme = {
         },
         purple: {
             default: '#c500c5',
-            light: '#c196c1'
+            light: '#e5b7e5'
+        },
+        gray: {
+            default: '#939393',
+            light: '#e9e9e9'
         }
     }
 }
