@@ -8,12 +8,16 @@ import {
 
 interface PipeCardProps {
   pipe: Pipe
+  onClick(): void
 }
 
-const PipeCard: React.FC<PipeCardProps> = ({ pipe }) => {
+const PipeCard: React.FC<PipeCardProps> = ({ pipe, onClick }) => {
 
   return (
-    <Container key={pipe.id} backgroundColor={pipe.color}>
+    <Container
+      backgroundColor={pipe.color}
+      onClick={onClick}
+    >
       <Content>
         <h4>{pipe.name}</h4>
       </Content>

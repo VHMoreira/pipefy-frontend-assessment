@@ -1,5 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
+import Modal from 'components/Common/Modal';
 import PipeCard from 'components/Pipes/Card';
+import useToogle from 'hooks/useToogle';
 import React from 'react';
 import {
   Container,
@@ -25,7 +27,14 @@ query GetOrganizations{
 `
 
 const PipesList: React.FC = () => {
-  const { data } = useQuery<{ organization: Organization }>(GET_ORGANIZATION)
+  const { data, loading: loadingOrganization } = useQuery<{ organization: Organization }>(GET_ORGANIZATION)
+
+
+  const { isActive: isOpen, active: openModal, disable: closeModal } = useToogle()
+
+  if (loadingOrganization) {
+    return null
+  }
 
   return (
     <Container>
@@ -35,9 +44,16 @@ const PipesList: React.FC = () => {
       </Subtitle>
       <Content>
         {data?.organization.pipes.map(pipe => (
-          <PipeCard pipe={pipe} />
+          <PipeCard key={pipe.id} pipe={pipe} onClick={openModal} />
         ))}
       </Content>
+      <Modal
+        isOpen={isOpen}
+        title='Modal Test'
+        onClose={closeModal}
+      >
+        Hello World
+      </Modal>
     </Container>
   );
 }

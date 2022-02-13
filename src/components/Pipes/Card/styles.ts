@@ -8,6 +8,7 @@ const getBackgroundColor = (key: ColorKeys, { colors }: Theme) =>
     colors[key].light ?? colors.gray.light
 
 export const Container = styled.div<ContainerProps>`
+    cursor: pointer;
     max-width: 100%;
     height: 230px;
     display: flex;
