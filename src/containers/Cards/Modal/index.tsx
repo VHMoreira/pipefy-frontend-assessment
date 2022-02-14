@@ -1,6 +1,14 @@
 import Modal from 'components/Common/Modal';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as CardQueries from 'queries/card'
+import {
+  BottomButtom,
+  ButtonText,
+  CardListContainer,
+  CardListItemContainer,
+  Footer,
+  ItemFieldContainer
+} from './styles';
 
 interface CardsModalProps {
   pipe: Pipe
@@ -33,8 +41,24 @@ const CardsModal: React.FC<CardsModalProps> = ({
       title={`Pipe ${pipe.name} cards`}
       onClose={handleCloseModal}
     >
-      {cards?.map((card) => <div key={card.node.id}>{card.node.title}</div>)}
-      {page?.hasNextPage ? <button onClick={handleNextPage}>see more</button> : null}
+      <CardListContainer>
+        {cards?.map((card) => (
+          <CardListItemContainer key={card.node.id}>
+            <ItemFieldContainer>{card.node.id}</ItemFieldContainer>
+            <ItemFieldContainer>{card.node.title}</ItemFieldContainer>
+            <ItemFieldContainer>
+              {card.node.current_phase.name}
+            </ItemFieldContainer>
+          </CardListItemContainer>
+        ))}
+      </CardListContainer>
+      <Footer>
+        {page?.hasNextPage ? (
+          <BottomButtom onClick={handleNextPage}>
+            <ButtonText>see more</ButtonText>
+          </BottomButtom>
+        ) : null}
+      </Footer>
     </Modal>
   );
 }

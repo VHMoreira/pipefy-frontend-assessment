@@ -23,6 +23,12 @@ const GlobalStyle = createGlobalStyle`
             text-decoration: none;
         }
 
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
         button {
             cursor: pointer;
         }
