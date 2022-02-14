@@ -1,8 +1,9 @@
-import { gql, useQuery } from '@apollo/client';
 import Modal from 'components/Common/Modal';
 import PipeCard from 'components/Pipes/Card';
 import useToogle from 'hooks/useToogle';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import * as OrganizationQueries from 'queries/organization'
+import * as CardQueries from 'queries/card'
 import {
   Container,
   Content,
@@ -10,27 +11,28 @@ import {
   Title
 } from './styles';
 
-const GET_ORGANIZATION = gql`
-query GetOrganizations{
-  organization(id: 300562393) {
-    id
-    name
-    pipes {
-      id
-      name
-      color
-      cards_count
-      icon
-    }
-  }
-}
-`
-
 const PipesList: React.FC = () => {
-  const { data, loading: loadingOrganization } = useQuery<{ organization: Organization }>(GET_ORGANIZATION)
-
-
   const { isActive: isOpen, active: openModal, disable: closeModal } = useToogle()
+  const { organization, loading: loadingOrganization } = OrganizationQueries.GetOrganization(300562393)
+  const [selectedPipeId, setSelectedPipeId] = useState<number | string>()
+  const [lastCursor, setLastCursor] = useState<string>()
+  const { cards, page } = CardQueries.GetAllCards(Number(selectedPipeId), 2, lastCursor)
+
+  const handleNextPage = useCallback(() => {
+    if (page?.hasNextPage && page.endCursor) {
+      setLastCursor(page.endCursor)
+    }
+  }, [page])
+
+  const handleSelectPipeCard = useCallback((pipeId: number | string) => {
+    setSelectedPipeId(pipeId)
+    openModal()
+  }, [openModal])
+
+  const handleCloseModal = useCallback(() => {
+    setLastCursor(undefined)
+    closeModal()
+  }, [closeModal])
 
   if (loadingOrganization) {
     return null
@@ -43,16 +45,17 @@ const PipesList: React.FC = () => {
         Here are all your process
       </Subtitle>
       <Content>
-        {data?.organization.pipes.map(pipe => (
-          <PipeCard key={pipe.id} pipe={pipe} onClick={openModal} />
+        {organization?.pipes.map(pipe => (
+          <PipeCard key={pipe.id} pipe={pipe} onClick={() => handleSelectPipeCard(pipe.id)} />
         ))}
       </Content>
       <Modal
         isOpen={isOpen}
         title='Modal Test'
-        onClose={closeModal}
+        onClose={handleCloseModal}
       >
-        Hello World
+        {cards?.map((card) => <div key={card.node.id}>{card.node.title}</div>)}
+        {page?.hasNextPage ? <button onClick={handleNextPage}>see more</button> : null}
       </Modal>
     </Container>
   );

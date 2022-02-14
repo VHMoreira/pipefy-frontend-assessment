@@ -1,0 +1,1 @@
+declare type GetOrganizationQuery = (organizationId: number) => GetOrganizationResponse
