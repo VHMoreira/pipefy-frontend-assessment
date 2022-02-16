@@ -1,6 +1,6 @@
 import PipeCard from 'components/Pipes/Card';
 import useToogle from 'hooks/useToogle';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Container,
   Content,
@@ -20,7 +20,26 @@ const PipesList: React.FC = () => {
   })
   const [selectedPipe, setSelectedPipe] = useState<Pipe>()
 
-  const organization = data?.organization
+  const pipes = useMemo(() => {
+    if (!data) {
+      return []
+    }
+
+    const unsortedPipes = [...data.organization.pipes]
+
+    const sortedPipes = unsortedPipes.sort((pipeA, pipeB) => {
+      if (pipeA.name < pipeB.name) {
+        return -1;
+      }
+
+      if (pipeA.name > pipeB.name) {
+        return 1;
+      }
+
+      return 0;
+    })
+    return sortedPipes
+  }, [data])
 
   const handleSelectPipeCard = useCallback((pipe: Pipe) => {
     setSelectedPipe(pipe)
@@ -38,7 +57,7 @@ const PipesList: React.FC = () => {
         Here are all your process
       </Subtitle>
       <Content>
-        {organization?.pipes.map(pipe => (
+        {pipes.map(pipe => (
           <PipeCard key={pipe.id} pipe={pipe} onClick={() => handleSelectPipeCard(pipe)} />
         ))}
       </Content>
