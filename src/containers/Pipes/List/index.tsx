@@ -1,7 +1,6 @@
 import PipeCard from 'components/Pipes/Card';
 import useToogle from 'hooks/useToogle';
 import React, { useCallback, useState } from 'react';
-import * as OrganizationQueries from 'queries/organization'
 import {
   Container,
   Content,
@@ -9,18 +8,26 @@ import {
   Title
 } from './styles';
 import CardsModal from 'containers/Cards/Modal';
+import { useQuery } from '@apollo/client';
+import { GET_ORGANIZATION } from 'store/organizations/queries';
 
 const PipesList: React.FC = () => {
   const { isActive: isOpen, active: openModal, disable: closeModal } = useToogle()
-  const { organization, loading: loadingOrganization } = OrganizationQueries.GetOrganization(300562393)
+  const { data, loading } = useQuery<GetOrganizationData, GetOrganizationVariables>(GET_ORGANIZATION, {
+    variables: {
+      organizationId: 300562393
+    }
+  })
   const [selectedPipe, setSelectedPipe] = useState<Pipe>()
+
+  const organization = data?.organization
 
   const handleSelectPipeCard = useCallback((pipe: Pipe) => {
     setSelectedPipe(pipe)
     openModal()
   }, [openModal])
 
-  if (loadingOrganization) {
+  if (loading) {
     return null
   }
 

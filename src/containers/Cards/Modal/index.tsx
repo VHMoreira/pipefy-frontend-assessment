@@ -1,6 +1,5 @@
 import Modal from 'components/Common/Modal';
-import React, { useCallback, useState } from 'react';
-import * as CardQueries from 'queries/card'
+import React, { useCallback } from 'react';
 import {
   BottomButtom,
   ButtonText,
@@ -9,6 +8,8 @@ import {
   Footer,
   ItemFieldContainer
 } from './styles';
+import { useQuery } from '@apollo/client';
+import CardQueries from 'store/cards/queries';
 
 interface CardsModalProps {
   pipe: Pipe
@@ -21,25 +22,31 @@ const CardsModal: React.FC<CardsModalProps> = ({
   isOpen,
   onClose
 }) => {
-  const [lastCursor, setLastCursor] = useState<string>()
-  const { cards, page } = CardQueries.GetAllCards(Number(pipe.id), 2, lastCursor)
-
-  const handleCloseModal = useCallback(() => {
-    setLastCursor(undefined)
-    onClose()
-  }, [onClose])
-
-  const handleNextPage = useCallback(() => {
-    if (page?.hasNextPage && page.endCursor) {
-      setLastCursor(page.endCursor)
+  const { data, fetchMore } = useQuery<GetAllCardsData, GetAllCardsVariables>(CardQueries.GET_ALL_CARDS, {
+    variables: {
+      pipeId: pipe.id,
+      limit: 2
     }
-  }, [page])
+  })
+
+  const cards = data?.cards.edges
+  const page = data?.cards.pageInfo
+
+  const handleNextPage = useCallback(async () => {
+    if (page?.hasNextPage && page.endCursor && cards) {
+      await fetchMore({
+        variables: {
+          cursor: page.endCursor
+        }
+      })
+    }
+  }, [cards, page, fetchMore])
 
   return (
     <Modal
       isOpen={isOpen}
       title={`Pipe ${pipe.name} cards`}
-      onClose={handleCloseModal}
+      onClose={onClose}
     >
       <CardListContainer>
         {cards?.map((card) => (
