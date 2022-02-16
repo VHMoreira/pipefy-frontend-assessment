@@ -1,5 +1,5 @@
 import Modal from 'components/Common/Modal';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   BottomButtom,
   ButtonText,
@@ -29,7 +29,7 @@ const CardsModal: React.FC<CardsModalProps> = ({
     }
   })
 
-  const cards = data?.cards.edges
+  const cards = useMemo(() => data ? data.cards.edges : [], [data])
   const page = data?.cards.pageInfo
 
   const handleNextPage = useCallback(async () => {

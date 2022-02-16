@@ -7,7 +7,7 @@ const cache = new InMemoryCache({
             fields: {
                 cards: {
                     keyArgs: false,
-                    read: (current, { variables }) => {
+                    read: (current: CardsCacheData, { variables }) => {
                         const { pipeId } = variables as GetAllCardsVariables
                         return current ? current[pipeId] : {}
                     },
