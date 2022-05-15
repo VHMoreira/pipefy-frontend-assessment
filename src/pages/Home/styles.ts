@@ -24,5 +24,6 @@ export const Content = styled.section`
     align-items: center;
     justify-content: center;
     width: 100%;
+    background-color: red;
     padding: 20px 0;
 `;
