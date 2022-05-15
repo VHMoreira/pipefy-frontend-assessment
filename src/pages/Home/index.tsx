@@ -1,4 +1,5 @@
 import React from 'react';
+import Pipes from 'containers/Pipes';
 import {
   Container,
   Content,
@@ -7,7 +8,6 @@ import {
 } from './styles';
 
 const Home: React.FC = () => {
-
   return (
     <Container>
       <Header>
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
         />
       </Header>
       <Content>
-
+        <Pipes />
       </Content>
     </Container>
   );
