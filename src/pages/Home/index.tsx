@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Container,
+  Content,
   Header,
   Logo
 } from './styles';
@@ -16,6 +17,9 @@ const Home: React.FC = () => {
           alt="logo"
         />
       </Header>
+      <Content>
+
+      </Content>
     </Container>
   );
 }
