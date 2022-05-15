@@ -1,4 +1,4 @@
-const DefaultTheme: Theme = {
+const DefaultTheme = {
     colors: {
         green: {
             default: '#8dda53',
