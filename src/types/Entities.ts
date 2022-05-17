@@ -12,3 +12,17 @@ export type Organization = {
     pipes: Pipe[]
 }
 
+export type Phase = {
+    id: number | string
+    color: string
+    name: string
+}
+
+export type Card = {
+    id: number | string
+    title: string
+    attachments_count: number
+    comments_count: number
+    current_phase: Phase
+}
+
